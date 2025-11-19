@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: main
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${DB_IOP}/bomi?serverTimezone=Asia/Seoul
+    username: ${DB_USERNAME}
+    password: ${DB_PASS}
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        format_sql: true
+
+  security:
+    jwt:
+      secret: ${SECRET_KEY}
+      access-expiration: 604800000
+      refresh-expiration: 2592000000
+      encryption: ${MY_KEY}
+      salt: ${MY_SALT}
+
+logging:
+  level:
+    org.springframework: DEBUG
+    org.springframework.web: DEBUG

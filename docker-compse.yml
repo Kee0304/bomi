@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  app:
+    tty: true
+    restart: always
+    container_name: spring_app
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - '8000:8000'
+
+    environment:
+      DB_IP: ${DB_IP}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASS: ${DB_PASS}
+      SECRET_KEY: ${SECRET_KEY}
+      MY_KEY: ${MY_KEY}
+      MY_SALT: ${MY_SALT}
+
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    restart: always
+    container_name: mysql_db
+    image: mysql:8.0
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASS}
+      MYSQL_DATABASE: bomi
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASS}
+
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  mysql_data:
