@@ -4,7 +4,7 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${DB_IOP}/bomi?serverTimezone=Asia/Seoul
+    url: jdbc:mysql://${DB_IP}/bomi?serverTimezone=Asia/Seoul
     username: ${DB_USERNAME}
     password: ${DB_PASS}
 
