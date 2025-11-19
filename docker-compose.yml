@@ -4,7 +4,7 @@ services:
   app:
     tty: true
     restart: always
-    container_name: spring_app
+    container_name: bomi_backend
     build:
       context: .
       dockerfile: ./Dockerfile
