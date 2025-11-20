@@ -1,6 +1,7 @@
 package com.bomi.main.service;
 
 import com.bomi.main.DTO.*;
+import com.bomi.main.component.CustomUserDetails;
 import com.bomi.main.component.JwtTokenProvider;
 import com.bomi.main.entity.Care;
 import com.bomi.main.entity.Member;
@@ -8,8 +9,11 @@ import com.bomi.main.repository.CareRepository;
 import com.bomi.main.repository.MemberRepository;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -24,6 +28,13 @@ public class MemberService {
 
     private final AuthService authService;
     private final JwtTokenProvider jwtTokenProvider;
+
+    public MemberInfoDTO getMemberInfo() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetails user = (CustomUserDetails) authentication.getPrincipal();
+        Long userId = user.getMemberId();
+        return getMemberInfo(userId);
+    }
 
     public MemberInfoDTO getMemberInfo(Long memberId) {
         Member member = memberRepository.findById(memberId).orElseThrow(EntityNotFoundException::new);

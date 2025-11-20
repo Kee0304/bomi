@@ -4,8 +4,10 @@ import com.bomi.main.DTO.GuardiansDTO;
 import com.bomi.main.DTO.MemberInfoDTO;
 import com.bomi.main.DTO.RequestPostGuardianDTO;
 import com.bomi.main.DTO.WardsDTO;
+import com.bomi.main.component.JwtTokenProvider;
 import com.bomi.main.domain.DecodedMemberId;
 import com.bomi.main.service.MemberService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,11 +19,11 @@ import org.springframework.web.bind.annotation.*;
 public class MemberController {
 
     private final MemberService memberService;
+    private final JwtTokenProvider jwtTokenProvider;
 
-    @GetMapping("/{memberId}")
-    public ResponseEntity<MemberInfoDTO> getMemberInfo(
-            @PathVariable("memberId") String encryptedMemberId, @DecodedMemberId("memberId") Long memberId) {
-        return new ResponseEntity<>(memberService.getMemberInfo(memberId), HttpStatus.OK);
+    @GetMapping
+    public ResponseEntity<MemberInfoDTO> getMemberInfo() {
+        return new ResponseEntity<>(memberService.getMemberInfo(), HttpStatus.OK);
     }
 
     @GetMapping("/ward/{memberId}")
