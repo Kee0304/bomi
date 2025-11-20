@@ -2,7 +2,7 @@ package com.bomi.main.DTO;
 
 public record LoginRequestDTO(String email, String memberName, String memberPhone) {
     public LoginRequestDTO {
-        if (memberPhone == null) {
+        if (memberPhone == null || memberPhone.equals("null")) {
             memberPhone = "";
         }
     }
