@@ -20,8 +20,8 @@ public class UsageService {
     private final int PAGE_SIZE = 7;
     private final UsageRepository usageRepository;
 
-    public DailyUsageListDTO getUsageData(Long memberId, String localDate) {
-        LocalDate endDate = LocalDate.parse(localDate).plusDays(1);
+    public DailyUsageListDTO getUsageData(Long memberId) {
+        LocalDate endDate = LocalDate.now().plusDays(1);
         LocalDate startDate = endDate.minusDays(PAGE_SIZE);
 
         List<DailyUsage> usageList = usageRepository

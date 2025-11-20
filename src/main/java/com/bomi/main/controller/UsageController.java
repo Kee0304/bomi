@@ -19,10 +19,9 @@ public class UsageController {
     @GetMapping("/{memberId}")
     public ResponseEntity<DailyUsageListDTO> getUsageData(
             @PathVariable("memberId") String encryptedMemberId,
-            @DecodedMemberId("memberId") Long memberId,
-            @RequestParam String localDate
+            @DecodedMemberId("memberId") Long memberId
     ) {
-        return new ResponseEntity<>(usageService.getUsageData(memberId, localDate), HttpStatus.OK);
+        return new ResponseEntity<>(usageService.getUsageData(memberId), HttpStatus.OK);
     }
 
     @PostMapping("/{memberId}")
