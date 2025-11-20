@@ -51,11 +51,11 @@ public class MemberService {
 
     public WardsDTO getMemberWards(Long memberId) {
         Set<Care> wards = careRepository.findWardsByGuardianId(memberId);
-        List<MemberInfoDTO> wardMembers = wards.stream()
+        List<WardInfoDTO> wardMembers = wards.stream()
                 .map(Care::getWard)
                 .map(member -> {
                     String encryptedMemberId = jwtTokenProvider.encryptId(String.valueOf(member.getMemberId()));
-                    return new MemberInfoDTO(encryptedMemberId, member.getMemberEmail(), member.getMemberDisplayName(), member.getMemberPhoneNumber());
+                    return new WardInfoDTO(encryptedMemberId, member.getMemberEmail(), member.getMemberDisplayName(), member.getMemberPhoneNumber());
                 })
                 .toList();
         return new WardsDTO(wardMembers);
@@ -63,11 +63,11 @@ public class MemberService {
 
     public GuardiansDTO getMemberGuardians(Long memberId) {
         Set<Care> guardians = careRepository.findGuardiansByWardId(memberId);
-        List<MemberInfoDTO> guardianMembers = guardians.stream()
+        List<GuardianInfoDTO> guardianMembers = guardians.stream()
                 .map(Care::getGuardian)
                 .map(member -> {
                     String encryptedMemberId = jwtTokenProvider.encryptId(String.valueOf(member.getMemberId()));
-                    return new MemberInfoDTO(encryptedMemberId, member.getMemberEmail(), member.getMemberDisplayName(), member.getMemberPhoneNumber());
+                    return new GuardianInfoDTO(encryptedMemberId, member.getMemberEmail(), member.getMemberDisplayName(), member.getMemberPhoneNumber());
                 })
                 .toList();
         return new GuardiansDTO(guardianMembers);
